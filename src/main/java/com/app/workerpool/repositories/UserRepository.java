@@ -12,9 +12,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User findFirstByUsername(String username);
 
-    List<User> findAllByDeletedIsFalse(Pageable pageable);
-
-    List<User> findAllByDeletedIsTrue(Pageable pageable);
+//    List<User> findAllByDeletedIsFalse(Pageable pageable);
+//
+//    List<User> findAllByDeletedIsTrue(Pageable pageable);
 
 
 }

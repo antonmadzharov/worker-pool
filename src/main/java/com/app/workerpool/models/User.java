@@ -4,15 +4,19 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.intellij.lang.annotations.Pattern;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long modelId;
+
     @Column(updatable = false, nullable = false)
     @Size(min = 1, max = 20, message = "Please enter first name between 1 and 20 characters")
     @Pattern(regexp = "^[A-Za-z]+$",message = "First name must contain only letters")
@@ -43,7 +47,7 @@ public class User {
     @Column(nullable = false)
     private String role;
 
-    @OneToOne(mappedBy = "user")
-    @JsonIgnore
-    private Image image;
+//    @OneToOne(mappedBy = "user")
+//    @JsonIgnore
+//    private Image image;
 }
