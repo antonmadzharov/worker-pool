@@ -47,14 +47,14 @@ public class ImageController {
     }
 
 
-    @GetMapping("/downloadImage")
-    public ResponseEntity<byte[]> downloadFile(final HttpServletRequest req) {
-        Image dbFile = imageService.getFile(userRepository.findFirstByUsername(
-                authenticationService.getUsername(req)).getImage().getModelId());
-        HttpHeaders header = new HttpHeaders();
-        header.setContentType(MediaType.valueOf(dbFile.getContentType()));
-        header.setContentLength(dbFile.getData().length);
-        header.set("Content-Disposition", "attachment; filename=" + dbFile.getFileName());
-        return new ResponseEntity<>(dbFile.getData(), header, HttpStatus.OK);
-    }
+//    @GetMapping("/downloadImage")
+//    public ResponseEntity<byte[]> downloadFile(final HttpServletRequest req) {
+//        Image dbFile = imageService.getFile(userRepository.findFirstByUsername(
+//                authenticationService.getUsername(req)).getImage().getModelId());
+//        HttpHeaders header = new HttpHeaders();
+//        header.setContentType(MediaType.valueOf(dbFile.getContentType()));
+//        header.setContentLength(dbFile.getData().length);
+//        header.set("Content-Disposition", "attachment; filename=" + dbFile.getFileName());
+//        return new ResponseEntity<>(dbFile.getData(), header, HttpStatus.OK);
+//    }
 }

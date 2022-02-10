@@ -59,13 +59,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+//        http.cors().and().csrf().disable();
         http.csrf().disable().cors().and().authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/login","/api/sign-up").permitAll()
-                .antMatchers(HttpMethod.GET,"/api/workers/**").permitAll()
-//                .antMatchers("/api/users/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/users/login","/users/sign-up").permitAll()
+                .antMatchers(HttpMethod.GET,"/workers/**").permitAll()
+                .antMatchers("/users/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(new LoginFilter("/api/login", authenticationManager()),
+                .addFilterBefore(new LoginFilter("/users/login", authenticationManager()),
                         UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new AuthenticationFilter(),
                         UsernamePasswordAuthenticationFilter.class);

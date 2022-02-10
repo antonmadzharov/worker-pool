@@ -43,6 +43,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @OneToOne(mappedBy = "user")
-    private Image image;
+    @Size(max = 250)
+    private String role;
+
+//    @OneToOne(mappedBy = "user")
+//    private Image image;
 }

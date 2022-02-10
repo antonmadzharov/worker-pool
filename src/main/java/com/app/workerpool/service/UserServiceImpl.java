@@ -21,6 +21,7 @@ public class UserServiceImpl implements UserService {
         System.out.println(user.getPassword() + "1111");
         System.out.println(newUser.getPassword() + "22222");
         newUser.setAge(user.getAge());
+        newUser.setRole("USER");
         newUser.setEmail(user.getEmail());
         return userRepository.save(newUser);
     }

@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 @Service
-public class AuthenticationServiceImpl implements AuthenticationService{
+public class AuthenticationServiceImpl implements AuthenticationService {
     private static final long EXPIRATIONTIME = 864_000_00; // 1 day in milliseconds
     private static final String SIGNINGKEY = "SecretKey";
     private static final String PREFIX = "Bearer";
@@ -44,6 +44,8 @@ public class AuthenticationServiceImpl implements AuthenticationService{
                 .compact();
         res.addHeader("Authorization", PREFIX + " " + JwtToken);
         res.addHeader("Access-Control-Expose-Headers", "Authorization");
+        res.addHeader("Access-Control-Expose-Headers", "userRole");
+        res.addHeader("userRole",authentication.getAuthorities().stream().findFirst().toString().substring(14,19));
     }
 
     static Authentication getAuthentication(HttpServletRequest request) {
