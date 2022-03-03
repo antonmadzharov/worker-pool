@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -14,7 +15,6 @@ import java.net.URI;
 
 import com.app.workerpool.models.Image;
 import com.app.workerpool.repositories.UserRepository;
-import com.app.workerpool.security.AuthenticationService;
 import com.app.workerpool.service.ImageService;
 
 @RestController
@@ -25,7 +25,6 @@ public class ImageController {
 
     private final ImageService imageService;
     private final UserRepository userRepository;
-    private final AuthenticationService authenticationService;
 
 
     @PostMapping("/uploadWorkerImage")
@@ -39,8 +38,8 @@ public class ImageController {
 
     @PostMapping("/uploadUserImage")
     public ResponseEntity<Void> uploadFile(@RequestParam("file") final MultipartFile file,
-                                           final HttpServletRequest req) {
-        imageService.storeUserImage(file, userRepository.findFirstByUsername(authenticationService.getUsername(req)));
+                                           Authentication authentication) {
+        imageService.storeUserImage(file, userRepository.findFirstByUsername(authentication.getName()));
         URI fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUri();
 
         return ResponseEntity.created(fileDownloadUri).build();

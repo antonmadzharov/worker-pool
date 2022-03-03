@@ -3,6 +3,7 @@ package com.app.workerpool.service;
 import com.app.workerpool.models.User;
 import com.app.workerpool.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptEncoder;
 
     @Override
     public User save(final User user) {
@@ -17,9 +19,7 @@ public class UserServiceImpl implements UserService {
         newUser.setUsername(user.getUsername());
         newUser.setFirstName(user.getFirstName());
         newUser.setLastName(user.getLastName());
-        newUser.setPassword(user.getPassword());
-        System.out.println(user.getPassword() + "1111");
-        System.out.println(newUser.getPassword() + "22222");
+        newUser.setPassword(bCryptEncoder.encode(user.getPassword()));
         newUser.setAge(user.getAge());
         newUser.setRole("USER");
         newUser.setEmail(user.getEmail());
