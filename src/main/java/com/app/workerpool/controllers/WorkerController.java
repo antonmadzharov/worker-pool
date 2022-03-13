@@ -16,11 +16,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.Authentication;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Optional;
@@ -30,6 +33,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Log4j2
 @RequestMapping(value = "workers")
+@Validated
 public class WorkerController {
 
     private final WorkerRepository workerRepository;
@@ -67,6 +71,21 @@ public class WorkerController {
                 .ofNullable(imageService.getFile(workerRepository.findById(modelId).get().getImage().getModelId()))
                 .map(this::createImageModelInResponseEntity)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+
+    @PostMapping(value = "/{modelId}/rate")
+    public ResponseEntity<?> rateWorker(@PathVariable() final long modelId,
+                                            @RequestParam(value = "speed") @Min(1) @Max(10)
+                                                    int speed,
+                                            @RequestParam(value = "quality") @Min(1) @Max(10)
+                                                    int quality,
+                                            @RequestParam(value = "communication") @Min(1) @Max(10)
+                                                    int communication,
+                                            @RequestParam(value = "price") @Min(1) @Max(10)
+                                                    int price) {
+
+        return new ResponseEntity<>(workerService.updateWorkerRating(speed + quality + communication + price, workerRepository.findById(modelId).get()), HttpStatus.OK);
     }
 
     private ResponseEntity<ByteArrayResource> createImageModelInResponseEntity(Image dbFile) {

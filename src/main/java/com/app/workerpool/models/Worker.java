@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -48,4 +50,9 @@ public class Worker {
     @OneToOne(mappedBy = "worker")
     @JsonIgnoreProperties("worker")
     private Image image;
+
+    private double rating = 0.0;
+
+    @JsonIgnore
+    private int counter = 0;
 }

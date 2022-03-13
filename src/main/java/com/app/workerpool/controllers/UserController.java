@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -29,6 +30,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @CrossOrigin(maxAge = 3600)
 @RestController
@@ -104,6 +107,15 @@ public class UserController {
                     .map(this::createImageModelInResponseEntity)
                     .orElseGet(() -> ResponseEntity.notFound().build());
         } else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/self/avatar")
+    public ResponseEntity<Void> uploadFile(@RequestParam("file") final MultipartFile file,
+                                           Authentication authentication) {
+        imageService.storeUserImage(file, userRepository.findFirstByUsername(authentication.getName()));
+        URI fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUri();
+
+        return ResponseEntity.created(fileDownloadUri).build();
     }
 
     private ResponseEntity<ByteArrayResource> createImageModelInResponseEntity(Image dbFile) {

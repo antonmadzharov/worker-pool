@@ -6,4 +6,6 @@ public interface WorkerService {
 
     Worker save(Worker worker);
 
+    Worker updateWorkerRating(double rating, Worker worker);
+
 }

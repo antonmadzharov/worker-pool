@@ -15,5 +15,4 @@ public interface WorkerRepository extends JpaRepository<Worker, Long>{
 
     Worker findWorkerByFirstName(@Param("firstName") String firstName);
 
-    Optional<Worker> findById(Long modelId);
 }
