@@ -12,7 +12,6 @@ import java.io.IOException;
 public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
-        System.out.println("ZDR KO PR");
         response.setStatus(401);
         response.getWriter().write("Login failed: " + authException.getMessage());
     }

@@ -1,6 +1,7 @@
 package com.app.workerpool.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -46,6 +47,8 @@ public class User {
     @Size(max = 250)
     private String role;
 
-//    @OneToOne(mappedBy = "user")
-//    private Image image;
+    @JsonIgnore
+    @OneToOne(mappedBy = "user")
+    @JsonIgnoreProperties("user")
+    private Image image;
 }

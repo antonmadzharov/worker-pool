@@ -29,6 +29,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateCurrentUserPassword(final String password,final User user){
         if(isPasswordValid(password)) {
+            user.setPassword(bCryptEncoder.encode(password));
             return userRepository.save(user);
         }else return null;
     }
@@ -39,6 +40,12 @@ public class UserServiceImpl implements UserService {
             return userRepository.save(user);
         }else return null;
     }
+
+    @Override
+    public User getUser(Long modelId) {
+        return userRepository.getById(modelId);
+    }
+
     private boolean isEmailValid(String email) {
         String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
         return email.matches(regex);

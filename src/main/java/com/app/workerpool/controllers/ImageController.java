@@ -1,5 +1,6 @@
 package com.app.workerpool.controllers;
 
+import com.app.workerpool.security.AuthenticationServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ import com.app.workerpool.service.ImageService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/image")
+@RequestMapping("/images")
 @CrossOrigin(value = {"*"}, exposedHeaders = {"Content-Disposition"})
 public class ImageController {
 
@@ -27,16 +28,16 @@ public class ImageController {
     private final UserRepository userRepository;
 
 
-    @PostMapping("/uploadWorkerImage")
+    @PostMapping("//{workerId}")
     public ResponseEntity<Void> uploadFile(@RequestParam(value = "file")
-                                           final MultipartFile file, @RequestParam("workerID")final long workerID) {
-        imageService.storeWorkerImage(file, workerID);
+                                           final MultipartFile file, @PathVariable() final Long workerId) {
+        imageService.storeWorkerImage(file, workerId);
         URI fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUri();
 
         return ResponseEntity.created(fileDownloadUri).build();
     }
 
-    @PostMapping("/uploadUserImage")
+    @PostMapping("/uploadUserImage/{modelId}")
     public ResponseEntity<Void> uploadFile(@RequestParam("file") final MultipartFile file,
                                            Authentication authentication) {
         imageService.storeUserImage(file, userRepository.findFirstByUsername(authentication.getName()));
@@ -45,15 +46,4 @@ public class ImageController {
         return ResponseEntity.created(fileDownloadUri).build();
     }
 
-
-//    @GetMapping("/downloadImage")
-//    public ResponseEntity<byte[]> downloadFile(final HttpServletRequest req) {
-//        Image dbFile = imageService.getFile(userRepository.findFirstByUsername(
-//                authenticationService.getUsername(req)).getImage().getModelId());
-//        HttpHeaders header = new HttpHeaders();
-//        header.setContentType(MediaType.valueOf(dbFile.getContentType()));
-//        header.setContentLength(dbFile.getData().length);
-//        header.set("Content-Disposition", "attachment; filename=" + dbFile.getFileName());
-//        return new ResponseEntity<>(dbFile.getData(), header, HttpStatus.OK);
-//    }
 }

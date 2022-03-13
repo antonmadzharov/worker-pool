@@ -9,4 +9,7 @@ public interface UserService {
     User updateCurrentUserPassword(String password, User user);
 
     User updateCurrentUserEmail(String password,User user);
+
+    User getUser(Long modelId);
+
 }

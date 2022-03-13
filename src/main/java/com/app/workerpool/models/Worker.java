@@ -1,6 +1,7 @@
 package com.app.workerpool.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -43,4 +44,8 @@ public class Worker {
     @Max(value = 100,message = "Must be a valid years of experience.")
     private int experience;
 
+    @JsonIgnore
+    @OneToOne(mappedBy = "worker")
+    @JsonIgnoreProperties("worker")
+    private Image image;
 }

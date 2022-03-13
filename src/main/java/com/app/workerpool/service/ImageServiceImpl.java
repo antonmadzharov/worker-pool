@@ -45,7 +45,6 @@ public class ImageServiceImpl implements ImageService {
             Image image = new Image(file.getOriginalFilename(),
                     file.getContentType(),
                     file.getBytes(),user);
-
             userImageRepository.save(image);
         } catch (IOException ex) {
             throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
