@@ -35,11 +35,6 @@ public class User {
     @Email
     private String email;
 
-    @Min(value = 18,message = "Not of age persons are not allowed to enter the site")
-    @Max(value = 150,message = "We are happy to see the oldest person on the planet at our doors," +
-            " barely believe it is your true age, please enter valid years")
-    private int age;
-
     @Size(min = 8, max = 128, message = "Password must be between 8 and 128 symbols")
     @Column(nullable = false)
     private String password;

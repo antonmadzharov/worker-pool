@@ -37,11 +37,6 @@ public class Worker {
     @Email
     private String email;
 
-    @Min(value = 18,message = "Not of age persons are not allowed to enter the site")
-    @Max(value = 150,message = "We are happy to see the oldest person on the planet at our doors," +
-            " barely believe it is your true age, please enter valid years")
-    private int age;
-
     @Min(value = 0,message = "Not a valid years of experience.")
     @Max(value = 100,message = "Must be a valid years of experience.")
     private int experience;

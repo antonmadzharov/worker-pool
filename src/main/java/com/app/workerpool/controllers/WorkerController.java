@@ -6,7 +6,6 @@ import com.app.workerpool.models.Worker;
 import com.app.workerpool.repositories.UserRepository;
 import com.app.workerpool.repositories.WorkerRepository;
 import com.app.workerpool.service.ImageService;
-import com.app.workerpool.service.UserService;
 import com.app.workerpool.service.WorkerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -15,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
-import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,7 +22,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import java.io.IOException;
 import java.net.URI;
 import java.util.Optional;
 
@@ -72,7 +69,6 @@ public class WorkerController {
                 .map(this::createImageModelInResponseEntity)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
-
 
     @PostMapping(value = "/{modelId}/rate")
     public ResponseEntity<?> rateWorker(@PathVariable() final long modelId,

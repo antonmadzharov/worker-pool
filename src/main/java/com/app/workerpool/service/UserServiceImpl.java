@@ -20,7 +20,6 @@ public class UserServiceImpl implements UserService {
         newUser.setFirstName(user.getFirstName());
         newUser.setLastName(user.getLastName());
         newUser.setPassword(bCryptEncoder.encode(user.getPassword()));
-        newUser.setAge(user.getAge());
         newUser.setRole("USER");
         newUser.setEmail(user.getEmail());
         return userRepository.save(newUser);
