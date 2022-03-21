@@ -23,7 +23,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @CrossOrigin(maxAge = 3600)
 @RestController
@@ -82,6 +84,21 @@ public class WorkerController {
                                                     int price) {
 
         return new ResponseEntity<>(workerService.updateWorkerRating(speed + quality + communication + price, workerRepository.findById(modelId).get()), HttpStatus.OK);
+    }
+
+    @GetMapping (value = "/search/firstname")
+    public ResponseEntity<?> findWorkerByFirstName(@RequestParam String firstName) {
+        return new ResponseEntity<>(workerRepository.findWorkerByFirstName(firstName), HttpStatus.OK);
+    }
+
+    @GetMapping (value = "/search/lastname")
+    public ResponseEntity<?> findWorkerByLastName(@RequestParam String lastName) {
+        return new ResponseEntity<>(workerRepository.findWorkerByLastName(lastName), HttpStatus.OK);
+    }
+
+    @GetMapping (value = "/search/specialization")
+    public ResponseEntity<?> findWorkerBySpecialization(@RequestParam String specialization) {
+        return new ResponseEntity<>(workerRepository.findWorkerBySpecialization(specialization), HttpStatus.OK);
     }
 
     private ResponseEntity<ByteArrayResource> createImageModelInResponseEntity(Image dbFile) {
