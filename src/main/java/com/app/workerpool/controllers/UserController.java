@@ -2,6 +2,7 @@ package com.app.workerpool.controllers;
 
 import com.app.workerpool.models.Image;
 import com.app.workerpool.models.User;
+import com.app.workerpool.models.UserDto;
 import com.app.workerpool.repositories.UserRepository;
 import com.app.workerpool.service.ImageService;
 import com.app.workerpool.service.UserService;
@@ -17,19 +18,11 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
 import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
 
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -45,7 +38,13 @@ public class UserController {
 
 
     @PostMapping(value = "/sign-up")
-    public ResponseEntity<User> save(@Valid @RequestBody final User user) {
+    public ResponseEntity<User> save(@Valid @RequestBody final UserDto userDto) {
+        User user = new User();
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setUsername(userDto.getUsername());
+        user.setPassword(userDto.getPassword());
+        user.setEmail(userDto.getEmail());
         System.out.println(user.toString());
         return new ResponseEntity<>(userService.save(user), HttpStatus.OK);
     }

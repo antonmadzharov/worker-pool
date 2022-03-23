@@ -19,6 +19,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
@@ -50,10 +51,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Collections.singletonList("*"));
+        config.setAllowedOrigins(List.of("http://localhost:8081"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH"));
         config.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
-        config.setAllowCredentials(true);
+        config.setAllowCredentials(false);
         config.applyPermitDefaultValues();
 
         source.registerCorsConfiguration("/**", config);
