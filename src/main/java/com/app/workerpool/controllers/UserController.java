@@ -2,7 +2,6 @@ package com.app.workerpool.controllers;
 
 import com.app.workerpool.models.Image;
 import com.app.workerpool.models.User;
-import com.app.workerpool.models.UserDto;
 import com.app.workerpool.repositories.UserRepository;
 import com.app.workerpool.service.ImageService;
 import com.app.workerpool.service.UserService;
@@ -38,13 +37,7 @@ public class UserController {
 
 
     @PostMapping(value = "/sign-up")
-    public ResponseEntity<User> save(@Valid @RequestBody final UserDto userDto) {
-        User user = new User();
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setUsername(userDto.getUsername());
-        user.setPassword(userDto.getPassword());
-        user.setEmail(userDto.getEmail());
+    public ResponseEntity<User> save(@Valid @RequestBody final User user) {
         System.out.println(user.toString());
         return new ResponseEntity<>(userService.save(user), HttpStatus.OK);
     }
