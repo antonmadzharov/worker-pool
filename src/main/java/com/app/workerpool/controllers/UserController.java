@@ -55,7 +55,6 @@ public class UserController {
 
     @PatchMapping(value = "/self/update-password")
     public ResponseEntity<User> updateUserOwnPassword(@RequestBody final User user,Authentication authentication){
-        System.out.println(user.getPassword());
         return Optional
                 .ofNullable( userService.updateCurrentUserPassword(user.getPassword(),userRepository.findFirstByUsername(
                         authentication.getName())) )
@@ -65,11 +64,11 @@ public class UserController {
     }
 
     @PatchMapping(value = "/self/update-email")
-    public ResponseEntity<User> updateUserOwnEmail(@RequestParam final String email,Authentication authentication){
+    public ResponseEntity<User> updateUserOwnEmail(@RequestParam final User user,Authentication authentication){
         return Optional
-                .ofNullable( userService.updateCurrentUserEmail(email,userRepository.findFirstByUsername(
+                .ofNullable( userService.updateCurrentUserEmail(user.getEmail(),userRepository.findFirstByUsername(
                         authentication.getName())) )
-                .map( user -> ResponseEntity.ok().body(user) )
+                .map( users -> ResponseEntity.ok().body(users) )
                 .orElseGet( () -> ResponseEntity.badRequest().build() );
     }
 
