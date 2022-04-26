@@ -102,7 +102,7 @@ public class UserController {
     }
 
     @PostMapping("/self/avatar")
-    public ResponseEntity<Void> uploadFile(@RequestParam("file") final MultipartFile file,
+    public ResponseEntity<Void> uploadFile(@RequestPart MultipartFile file,
                                            Authentication authentication) {
         imageService.storeUserImage(file, userRepository.findFirstByUsername(authentication.getName()));
         URI fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUri();
